@@ -1,0 +1,8 @@
+numpy
+netCDF4
+xarray
+dask
+toolz
+geopy
+paramiko
+pytest
