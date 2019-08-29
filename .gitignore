@@ -102,3 +102,10 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# documentation files -- don't need HTML
+doc/build/* # all of this will be generated at user's command
+doc/source/*
+!doc/source/conf.py
+!doc/source/_templates/
+!doc/source/_static

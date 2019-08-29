@@ -36,8 +36,3 @@ Coordinates:
   * RNGE     (RNGE) float64 5.825 11.65 17.47 23.3 ... 267.9 273.8 279.6 285.4
 ...
 ```
-
-### TODO
-- module documentation
-- inline docs with `Sphinx`
-- CircleCI badge

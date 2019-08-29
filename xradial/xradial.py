@@ -10,10 +10,15 @@ def create_xarray_dataset(fp, time_var_str, cf_time_units, numerical_metadata=Fa
     """High-level wrapper for the xRADIAL API. Given a path to data, a name of the
     time variable, and a string of the CF-compliant time units, convert that ASCII
     data to an xarray Dataset object.
-    :param file-path object fp    : file path to ASCII data
-    :param str time_var_str       : name of time variable
-    :param str cf_time_units      : string describing the units of the time variable
-    :param bool numerical_metadata: indicator to convert metadata to numeric types"""
+
+    Args:
+        fp (file-path object): file path to ASCII data
+        time_var_str (str): name of time variable
+        cf_time_units (str): string describing the units of the time variable
+        numerical_metadata (bool): indicator to convert metadata to numeric types
+
+    Returns:
+        xarray.Dataset: Dataset of the data in the ASCII file"""
 
     # TODO move this out? specify in JSON maybe for extensibility?
     ColLongNameMap = {
