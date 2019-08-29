@@ -9,11 +9,15 @@ import xradial.utils as utils # helper functions
 
 def create_dataframe(fp, tvar, dt, metadata):
     """Given a file path, create a pandas DataFrame of the ASCII data.
-    :param file path object fp: file path to data
-    :param str tvar: time variable
-    :param datetime.datetime dt: date 
-    :param dict metadata: dict of metadata
-    :return pandas.DataFrame"""
+
+    Args:
+        fp (file path object): file path to data
+        tvar (str): time variable
+        dt (datetime.datetime): date 
+        metadata (dict): dict of metadata
+
+    Returns:
+        pandas.DataFrame"""
 
     # ASCII data as pandas DataFrame
     df = create_initial_dataframe(fp, metadata, tvar, dt)
@@ -27,11 +31,15 @@ def create_dataframe(fp, tvar, dt, metadata):
 
 def reindex_dataframe(df, metadata, tvar, olat, olon):
     """Re-index the DataFrame based on the prevailing coordinate system.
-    :param pandas.DataFrame df
-    :param dict metadata
-    :param str tvar
-    :param datetime.datetime dt
-    :return pandas.DataFrame"""
+
+    Args:
+        df (pandas.DataFrame): DataFrame to reindex
+        metadata (dict): dict of metadata
+        tvar (str): time variable
+        dt (datetime.datetime): date in file
+
+    Returns:
+        pandas.DataFrame: re-indexed DataFrame"""
 
     # calculate maximum range 
     max_range = utils.calc_max_range(metadata)
@@ -68,11 +76,15 @@ def reindex_dataframe(df, metadata, tvar, olat, olon):
 def create_initial_dataframe(path, metadata, time_var_str, time):
     """Use pandas to read in a file and create a DataFrame object.
     Set the column "TIME_VAR_STR" as `time`, a passed datetime object.
-    :param str path: path to file
-    :param dict metadata
-    :param str time_var_str: name of time variable
-    :param datetime.datetime time
-    :return pandas.DataFrame"""
+
+    Args:
+        path (str): path to file
+        metadata (dict): dict of metadata
+        time_var_str (str): name of time variable
+        time (datetime.datetime): time in file
+
+    Returns:
+        pandas.DataFrame: DataFrame of ASCII data"""
 
     # create dataframe as it is created in the main function
     df = pd.read_csv(
@@ -90,10 +102,15 @@ def create_initial_dataframe(path, metadata, time_var_str, time):
 
 def reindex_df_by_lat_lon(df, olat, olon, max_range, time_var_str):
     """Create a MultiIndex from the time, latitude and longitude values.
-    :param pandas.DataFrame df
-    :param float/None olat, olon
-    :param int max_range
-    :return pandas.DataFrame"""
+
+    Args:
+        df (pandas.DataFrame): DataFrame to re-index
+        olat (float/None): origin latidude
+        olon (float/None): origin longitude
+        max_range (int): maximum range of data
+
+    Returns:
+        pandas.DataFrame: re-indexed DataFrame"""
 
     # TODO look into modifying in-place for performance
 
@@ -135,14 +152,18 @@ def reindex_df_by_range_bearing(df, angular_res,
     rres_precision, rres_km,
     max_range, range_cells, time_var_str):
     """Reindex the DataFrame by creating a MultiIndex of ranges and bearings.
-    :param pandas.DataFrame df
-    :param float/None angular_res
-    :param int rres_precision
-    :param float rres_km
-    :param float max_range
-    :param int range_cells
-    :param str time_var_str
-    :return pandas.DataFrame"""
+
+    Args:
+        df pandas.DataFrame: DataFrame to re-index
+        angular_res (float/None): angular resolution
+        rres_precision (int): range resolution precision
+        rres_km (float): range resolution (kilometers)
+        max_range (float): maximum range of data
+        range_cells (int): number of range cells in data
+        time_var_str (str): name of time variable
+
+    Returns:
+        pandas.DataFrame: re-indexed DataFrame"""
 
     # TODO look into modifying in-place for performance
     # TODO should raise more explicit errors
