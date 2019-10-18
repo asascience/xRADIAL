@@ -93,6 +93,21 @@ def get_range_res_start_end(metadata):
     range_end = metadata.get('RangeEnd', None)
     range_resolution_kmeters = metadata.get('RangeResolutionKMeters', None)
     range_resolution_meters = metadata.get('RangeResolutionMeters', None)
+
+    # assert numeric types
+    if not any(
+        [
+            isinstance(range_resolution_kmeters, float),
+            isinstance(range_resolution_kmeters, int),
+            isinstance(range_resolution_meters, float),
+            isinstance(range_resolution_meters, int)
+        ]):
+        raise ValueError("Range resolutions must be numeric")
+
+    # if km doesn't exist, create it from meters
+    if (not range_resolution_kmeters) and (range_resolution_meters):
+        range_resolution_kmeters = range_resolution_meters / 1000.
+
     return (range_start, range_end, range_resolution_kmeters, range_resolution_meters)
 
 def get_range_resolution_precision(range_resolution_kmeters, range_resolution_meters):

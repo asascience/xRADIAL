@@ -171,6 +171,11 @@ def reindex_df_by_range_bearing(df, angular_res,
     unique_bearing_diffs = np.diff(np.unique(df['BEAR']))
 
     df = df.set_index([time_var_str, 'BEAR', 'RNGE'])
+
+    # if the DataFrame has only 1 row, there will be no bearing diffs; in
+    # this case, simply set the multi index and return the dataframe    
+    if unique_bearing_diffs.shape[0] < 1:
+        return df
     
     # deal with missing angular resolution metadata
     if not angular_res:
