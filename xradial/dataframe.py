@@ -59,7 +59,6 @@ def reindex_dataframe(df, metadata, tvar, olat, olon):
         a_res = utils.get_angular_resolution(metadata)
         rnge_s, rnge_e, rres_km, rres_m = utils.get_range_res_start_end(metadata)
         rres_precision = utils.get_range_resolution_precision(rres_km, rres_m)
-        rnge_cells = utils.get_range_cells(metadata, df, max_range, rres_km)
 
         df = reindex_df_by_range_bearing(
             df, 
@@ -67,7 +66,6 @@ def reindex_dataframe(df, metadata, tvar, olat, olon):
             rres_precision,
             rres_km,
             max_range, 
-            rnge_cells,
             tvar, 
         )
 
@@ -149,8 +147,7 @@ def reindex_df_by_lat_lon(df, olat, olon, max_range, time_var_str):
     return df
 
 def reindex_df_by_range_bearing(df, angular_res,
-    rres_precision, rres_km,
-    max_range, range_cells, time_var_str):
+    rres_precision, rres_km, max_range, time_var_str):
     """Reindex the DataFrame by creating a MultiIndex of ranges and bearings.
 
     Args:
@@ -159,7 +156,6 @@ def reindex_df_by_range_bearing(df, angular_res,
         rres_precision (int): range resolution precision
         rres_km (float): range resolution (kilometers)
         max_range (float): maximum range of data
-        range_cells (int): number of range cells in data
         time_var_str (str): name of time variable
 
     Returns:
@@ -190,7 +186,7 @@ def reindex_df_by_range_bearing(df, angular_res,
         (np.arange(_rmin, 0,    -rres_km)[1:][::-1]),
         (np.arange(_rmin, _rmax, rres_km)), # dont include last element (fixed issue here)
         (np.arange(_rmax, max_range+0.01, rres_km))
-    )).round(decimals=rres_precision)[:range_cells])
+    )).round(decimals=rres_precision))
 
     # bearings
     assert all(unique_bearing_diffs % angular_res == 0)

@@ -228,7 +228,7 @@ class TestXRadials(unittest.TestCase):
         rnge_s, rnge_e, rnge_res_km, rnge_res_m = utils.get_range_res_start_end(metadata)
         self.assertEqual(
             (rnge_s, rnge_e, rnge_res_km, rnge_res_m),
-            (2, 35, None, 5000.8249)
+            (2, 35, 5.0008249, 5000.8249)
         )
 
     def test_get_range_resolution_precision(self):
@@ -390,7 +390,6 @@ class TestXRadials(unittest.TestCase):
         dt = datetime.datetime(2018, 2, 14, 0, 0, 0)
         TIME_VAR_STR = "time"
         angular_res = 5.0
-        range_cells = 49
 
         # resolutions
         range_resolution_kmeters = 5.8249
@@ -415,7 +414,6 @@ class TestXRadials(unittest.TestCase):
             range_resolution_kmeters_decimal_digits,
             range_resolution_kmeters,
             max_range, 
-            range_cells,
             TIME_VAR_STR,
         )
 
