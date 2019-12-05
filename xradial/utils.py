@@ -57,6 +57,14 @@ def calc_max_range(metadata):
     Based on information in the metadata (if available), calculate the maximum
     range of the file.
 
+    See https://www.coris.noaa.gov/metadata/records/faq/nodc_fgdc_metadata_0013113.html
+    useable range of the ground wave depends on attenuation, and increases with decreasing frequency
+    approximately range(km)*frequency(MHz) = 2000
+    thus
+      32 MHz =  60 km
+      16 MHz = 125 km
+       8 MHz = 250 km
+
     Args:
         metadata (dict): metadata
 
