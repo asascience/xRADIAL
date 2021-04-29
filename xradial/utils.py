@@ -44,10 +44,19 @@ def get_metadata_from_file(path, numeric=False):
         comments = list(map(lambda l: l[1:].strip(), comments))
         if numeric: # attempt to convert to numeric types
             metadata = {}
-            for c in comments:
-                if not c.startswith('%'):
-                    metadata_entry = list(map(str.strip, c.split(':')))
-                    metadata[metadata_entry[0]] = pd.to_numeric(metadata_entry[1], errors='ignore')
+            if 'TableStart:' in comments: # find where the table starts if 'TableStart:' exists
+                TBSind = comments.index('TableStart:')
+                for c in comments:
+                    if not c.startswith('%'):
+                        Cind = comments.index(c)
+                        if not Cind > TBSind: # don't parse if comment is after TableStart:
+                            metadata_entry = list(map(str.strip, c.split(':')))
+                            metadata[metadata_entry[0]] = pd.to_numeric(metadata_entry[1], errors='ignore')
+            else: # if 'TableStart:; doesn't exist
+                for c in comments:
+                    if not c.startswith('%'):
+                        metadata_entry = list(map(str.strip, c.split(':')))
+                        metadata[metadata_entry[0]] = pd.to_numeric(metadata_entry[1], errors='ignore')
         else: # non-numeric
             metadata = dict([tuple(map(str.strip, c.split(':'))) for c in comments if not c.startswith('%')])
         return metadata
